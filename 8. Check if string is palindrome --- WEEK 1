@@ -48,7 +48,6 @@ bool isPalindrome(char *s) {
 
 PYTHON:
 
-8)
 class Solution:
     def isPalindrome(self, s):
         return s == s[::-1]
