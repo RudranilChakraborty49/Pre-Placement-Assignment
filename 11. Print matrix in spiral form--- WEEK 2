@@ -1,0 +1,140 @@
+QUESTION:
+
+Spirally traversing a matrix
+Difficulty: MediumAccuracy: 35.2%Submissions: 324K+Points: 4
+You are given a rectangular matrix mat[][] of size n x m, and your task is to return an array while traversing the matrix in spiral form.
+
+Examples:
+
+Input: mat[][] = [[1, 2, 3, 4],
+                [5, 6, 7, 8],
+                [9, 10, 11, 12], 
+                [13, 14, 15, 16]]
+Output: [1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10]
+Explanation: 
+
+Input: mat[][] = [[2, 7, 10],
+                [5, 1, 3],
+                [4, 2, 8]]
+Output: [2, 7, 10, 3, 8, 2, 4, 5, 1]
+Explanation: Applying same technique as shown above.
+Input: mat[][] = [[32, 44, 27, 23],
+                [54, 28, 50, 62]]
+Output: [32, 44, 27, 23, 62, 50, 28, 54]
+Explanation: Applying same technique as shown above, output will be [32, 44, 27, 23, 62, 50, 28, 54].
+Constraints:
+1 ≤ n, m ≤1000
+0 ≤ mat[i][j] ≤100
+
+ANSWER:
+
+PYTHON:
+
+class Solution:
+    def spirallyTraverse(self, mat):
+        if not mat:
+            return []
+        
+        n = len(mat)
+        m = len(mat[0])
+        result = []
+        
+        top, bottom = 0, n - 1
+        left, right = 0, m - 1
+        
+        while top <= bottom and left <= right:
+            for i in range(left, right + 1):
+                result.append(mat[top][i])
+            top += 1
+            
+    
+            for i in range(top, bottom + 1):
+                result.append(mat[i][right])
+            right -= 1
+            
+            if top <= bottom:
+               
+                for i in range(right, left - 1, -1):
+                    result.append(mat[bottom][i])
+                bottom -= 1
+            
+            if left <= right:
+                
+                for i in range(bottom, top - 1, -1):
+                    result.append(mat[i][left])
+                left += 1
+                
+        return result
+
+C:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void spirallyTraverse(int **matrix, int n, int m, int *result) {
+    int top = 0, bottom = n - 1;
+    int left = 0, right = m - 1;
+    int index = 0;
+    
+    while (top <= bottom && left <= right) {
+        // Traverse from left to right
+        for (int i = left; i <= right; i++) {
+            result[index++] = matrix[top][i];
+        }
+        top++;
+        
+        // Traverse from top to bottom
+        for (int i = top; i <= bottom; i++) {
+            result[index++] = matrix[i][right];
+        }
+        right--;
+        
+        if (top <= bottom) {
+            // Traverse from right to left
+            for (int i = right; i >= left; i--) {
+                result[index++] = matrix[bottom][i];
+            }
+            bottom--;
+        }
+        
+        if (left <= right) {
+            // Traverse from bottom to top
+            for (int i = bottom; i >= top; i--) {
+                result[index++] = matrix[i][left];
+            }
+            left++;
+        }
+    }
+}
+
+int main() {
+    int n = 4, m = 4;
+    
+    // Allocate memory for matrix
+    int **matrix = (int **)malloc(n * sizeof(int *));
+    for (int i = 0; i < n; i++)
+        matrix[i] = (int *)malloc(m * sizeof(int));
+    
+    // Initialize the matrix (example)
+    int val = 1;
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            matrix[i][j] = val++;
+    
+    int *result = (int *)malloc(n * m * sizeof(int));
+    
+    spirallyTraverse(matrix, n, m, result);
+    
+    printf("Spiral traversal:\n");
+    for (int i = 0; i < n * m; i++)
+        printf("%d ", result[i]);
+    printf("\n");
+    
+    // Free allocated memory
+    for (int i = 0; i < n; i++)
+        free(matrix[i]);
+    free(matrix);
+    free(result);
+    
+    return 0;
+}
