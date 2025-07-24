@@ -1,0 +1,75 @@
+QUESTION:
+
+Diagonal sum
+Difficulty: BasicAccuracy: 52.31%Submissions: 14K+Points: 1Average Time: 8m
+Given a square matrix of size n×n. Your task is to calculate the sum of its diagonals.
+ 
+
+Example 1:
+
+Input: matrix = {{1, 1, 1}, 
+{1, 1, 1}, {1, 1, 1}}
+Output: 6
+Example 2:
+
+Input: matrix = {{1, 2}, {3, 4}}
+Output: 10
+ 
+
+Your Task:
+You don't need to read or print anyhting. Your task is to complete the function DiagonalSum() which takes the matrix as input parameter and returns the sum of its diagonals.
+ 
+
+Expected Time Complexity: O(n)
+Expected Space Complexity: O(1)
+
+Constraints:
+1 <= n <= 100
+1 <= matrix elements <= 10000
+
+ANSWER:
+
+PYTHON:
+
+class Solution:
+    def DiagonalSum(self, matrix):
+        n = len(matrix)
+        total = 0
+        
+        for i in range(n):
+            total += matrix[i][i]               # primary diagonal
+            total += matrix[i][n - 1 - i]       # secondary diagonal
+        
+        return total
+
+C:
+
+#include <stdio.h>
+
+int DiagonalSum(int n, int matrix[n][n]) {
+    int total = 0;
+    for (int i = 0; i < n; i++) {
+        total += matrix[i][i];           // primary diagonal
+        total += matrix[i][n - 1 - i];   // secondary diagonal
+    }
+    return total;
+}
+
+int main() {
+    int n;
+    printf("Enter size of the matrix (n): ");
+    scanf("%d", &n);
+
+    int matrix[n][n];
+    printf("Enter matrix elements:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+
+    int result = DiagonalSum(n, matrix);
+    printf("Diagonal sum: %d\n", result);
+
+    return 0;
+}
