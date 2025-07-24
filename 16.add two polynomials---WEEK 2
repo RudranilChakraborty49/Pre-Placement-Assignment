@@ -1,0 +1,87 @@
+QUESTION:
+
+Program to add two polynomials
+Last Updated : 19 Mar, 2024
+Given two polynomials represented by two arrays, write a function that adds given two polynomials. 
+
+Example: 
+
+Input:  A[] = {5, 0, 10, 6} 
+        B[] = {1, 2, 4} 
+Output: sum[] = {6, 2, 14, 6}
+
+The first input array represents "5 + 0x^1 + 10x^2 + 6x^3"
+The second array represents "1 + 2x^1 + 4x^2" 
+And Output is "6 + 2x^1 + 14x^2 + 6x^3"
+
+ANSWER:
+
+PYTHON:
+
+def add_polynomials(A, B):
+    sizeA = len(A)
+    sizeB = len(B)
+    sizeSum = max(sizeA, sizeB)
+    sum_poly = [0] * sizeSum
+    
+    i, j, k = 0, 0, 0
+    while i < sizeA and j < sizeB:
+        sum_poly[k] = A[i] + B[j]
+        i += 1
+        j += 1
+        k += 1
+        
+    while i < sizeA:
+        sum_poly[k] = A[i]
+        i += 1
+        k += 1
+        
+    while j < sizeB:
+        sum_poly[k] = B[j]
+        j += 1
+        k += 1
+        
+    return sum_poly
+
+A = [5, 0, 10, 6]
+B = [1, 2, 4]
+sum_poly = add_polynomials(A, B)
+
+print(sum_poly)
+
+C:
+
+#include <stdio.h>
+
+void addPolynomials(int A[], int sizeA, int B[], int sizeB, int sum[], int *sizeSum) {
+    int i = 0, j = 0, k = 0;
+    while (i < sizeA && j < sizeB) {
+        sum[k++] = A[i++] + B[j++];
+    }
+    while (i < sizeA) {
+        sum[k++] = A[i++];
+    }
+    while (j < sizeB) {
+        sum[k++] = B[j++];
+    }
+    *sizeSum = k;
+}
+
+int main() {
+    int A[] = {5, 0, 10, 6};
+    int B[] = {1, 2, 4};
+    int sizeA = sizeof(A) / sizeof(A[0]);
+    int sizeB = sizeof(B) / sizeof(B[0]);
+    int sum[sizeA > sizeB ? sizeA : sizeB];
+    int sizeSum;
+
+    addPolynomials(A, sizeA, B, sizeB, sum, &sizeSum);
+
+    for (int i = 0; i < sizeSum; i++) {
+        printf("%d ", sum[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
+
