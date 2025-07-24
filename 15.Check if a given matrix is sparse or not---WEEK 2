@@ -1,0 +1,55 @@
+QUESTION:
+
+Check if a given matrix is sparse or not
+Last Updated : 20 Jul, 2022
+A matrix is a two-dimensional data object having m rows and n columns, therefore a total of m*n values. If most of the values of a matrix are 0 then we say that the matrix is sparse. 
+Consider a definition of Sparse where a matrix is considered sparse if the number of 0s is more than half of the elements in the matrix,
+
+Examples: 
+
+Input : 1 0 3
+        0 0 4
+        6 0 0
+Output : Yes
+There are 5 zeros. This count
+is more than half of matrix
+size.
+
+Input : 1 2 3
+        0 7 8
+        5 0 7 
+Output: No 
+
+ANSWER:
+
+PYTHON:
+
+
+MAX = 100
+ 
+def isSparse(array,m, n) :
+    
+    counter = 0
+ 
+   
+    for i in range(0,m) :
+        for j in range(0,n) :
+            if (array[i][j] == 0) :
+                counter = counter + 1
+ 
+    return (counter > 
+            ((m * n) // 2))
+
+
+array = [ [ 1, 0, 3 ],
+          [ 0, 0, 4 ],
+          [ 6, 0, 0 ] ]
+m = 3
+n = 3
+
+if (isSparse(array, m, n)) :
+    print("Yes")
+else :
+    print("No")
+    
+    
