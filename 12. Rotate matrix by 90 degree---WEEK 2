@@ -1,0 +1,121 @@
+QUESTION:
+
+Rotate by 90 degree
+Difficulty: EasyAccuracy: 56.88%Submissions: 123K+Points: 2Average Time: 20m
+Given a square matrix mat[][] of size n x n. The task is to rotate it by 90 degrees in an anti-clockwise direction without using any extra space. 
+
+Examples:
+
+Input: mat[][] = [[0, 1, 2], 
+                [3, 4, 5], 
+                [6, 7, 8]] 
+Output: [[2, 5, 8],
+        [1, 4, 7],
+        [0, 3, 6]]
+Input: mat[][] = [[1, 2],
+                [3, 4]]
+Output: [[2, 4],
+        [1, 3]]
+Constraints:
+1 ≤ n ≤ 102
+0 ≤ mat[i][j] ≤ 103
+
+
+ANSWER:
+
+PYTHON:
+
+class Solution:
+    def rotateMatrix(self, mat):
+        n = len(mat)
+        
+        
+        for i in range(n):
+            for j in range(i+1, n):
+                mat[i][j], mat[j][i] = mat[j][i], mat[i][j]
+        
+        
+        for j in range(n):
+            top, bottom = 0, n - 1
+            while top < bottom:
+                mat[top][j], mat[bottom][j] = mat[bottom][j], mat[top][j]
+                top += 1
+                bottom -= 1
+
+C:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void spiralTraversal(int **mat, int n, int m, int *result) {
+    int top = 0, bottom = n - 1;
+    int left = 0, right = m - 1;
+    int index = 0;
+
+    while (top <= bottom && left <= right) {
+        // Traverse from left to right
+        for (int i = left; i <= right; i++) {
+            result[index++] = mat[top][i];
+        }
+        top++;
+
+        // Traverse downwards
+        for (int i = top; i <= bottom; i++) {
+            result[index++] = mat[i][right];
+        }
+        right--;
+
+        if (top <= bottom) {
+            // Traverse from right to left
+            for (int i = right; i >= left; i--) {
+                result[index++] = mat[bottom][i];
+            }
+            bottom--;
+        }
+
+        if (left <= right) {
+            // Traverse upwards
+            for (int i = bottom; i >= top; i--) {
+                result[index++] = mat[i][left];
+            }
+            left++;
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    printf("Enter number of rows and columns:\n");
+    scanf("%d %d", &n, &m);
+
+    // Dynamically allocate matrix
+    int **mat = (int **)malloc(n * sizeof(int *));
+    for (int i = 0; i < n; i++) {
+        mat[i] = (int *)malloc(m * sizeof(int));
+    }
+
+    printf("Enter matrix elements:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            scanf("%d", &mat[i][j]);
+        }
+    }
+
+    int *result = (int *)malloc(n * m * sizeof(int));
+    spiralTraversal(mat, n, m, result);
+
+    printf("Spiral traversal:\n");
+    for (int i = 0; i < n * m; i++) {
+        printf("%d ", result[i]);
+    }
+    printf("\n");
+
+    // Free allocated memory
+    for (int i = 0; i < n; i++) {
+        free(mat[i]);
+    }
+    free(mat);
+    free(result);
+
+    return 0;
+}
