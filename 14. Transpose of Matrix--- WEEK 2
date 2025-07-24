@@ -1,0 +1,76 @@
+QUESTION:
+
+Transpose of Matrix
+Difficulty: EasyAccuracy: 66.5%Submissions: 112K+Points: 2Average Time: 20m
+You are given a square matrix of size n x n. Your task is to find the transpose of the given matrix.
+The transpose of a matrix is obtained by converting all the rows to columns and all the columns to rows.
+
+Examples :
+
+Input: mat[][] = [[1, 1, 1, 1],
+                [2, 2, 2, 2],
+                [3, 3, 3, 3],
+                [4, 4, 4, 4]]
+Output: [[1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4],
+       [1, 2, 3, 4]]
+Explanation: Converting rows into columns and columns into rows.
+Input: mat[][] =  [[1, 2],
+                 [9, -2]]
+Output: [[1, 9],
+        [2, -2]]
+Explanation: Converting rows into columns and columns into rows.
+Constraints:
+1 ≤ n ≤ 103
+-109 ≤ mat[i][j] ≤109
+
+ANSWER:
+
+PYTHON:
+
+class Solution:
+    def transpose(self, matrix):
+        n = len(matrix)
+        
+        for i in range(n):
+            for j in range(i + 1, n):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        return matrix
+
+C:
+
+#include <stdio.h>
+
+void transpose(int n, int matrix[n][n]) {
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            int temp = matrix[i][j];
+            matrix[i][j] = matrix[j][i];
+            matrix[j][i] = temp;
+        }
+    }
+}
+
+void printMatrix(int n, int matrix[n][n]) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    scanf("%d", &n);
+    int matrix[n][n];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &matrix[i][j]);
+        }
+    }
+    transpose(n, matrix);
+    printMatrix(n, matrix);
+    return 0;
+}
